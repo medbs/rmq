@@ -1,12 +1,12 @@
 ### Basic Messaging with Spring boot & RabbitMQ
 
-####Prerequisites
+#### Prerequisites
 * Java
 * Docker & docker-compose
 * Maven
 
 
-####Run the project 
+#### Run the project 
 
 `docker-compose up`
 
