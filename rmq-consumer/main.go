@@ -43,10 +43,10 @@ func initAmqp() {
 	ch, err = conn.Channel()
 	failOnError(err, "Failed to open a channel")
 
-	log.Printf("got Channel, declaring Exchange (%s)", "go-test-exchange")
+	log.Printf("got Channel, declaring Exchange (%s)", "rmq-exchange")
 
 	err = ch.ExchangeDeclare(
-		"go-test-exchange", // name of the exchange
+		"rmq-exchange", // name of the exchange
 		"direct",           // type
 		true,               // durable
 		false,              // delete when complete
@@ -56,10 +56,10 @@ func initAmqp() {
 	)
 	failOnError(err, "Failed to declare the Exchange")
 
-	log.Printf("declared Exchange, declaring Queue (%s)", "go-test-queue")
+	log.Printf("declared Exchange, declaring Queue (%s)", "rmq-exchange")
 
 	q, err = ch.QueueDeclare(
-		"go-test-queue", // name, leave empty to generate a unique name
+		"rmq.queue", // name, leave empty to generate a unique name
 		true,            // durable
 		false,           // delete when usused
 		false,           // exclusive
@@ -73,8 +73,8 @@ func initAmqp() {
 
 	err = ch.QueueBind(
 		q.Name,             // name of the queue
-		"go-test-key",      // bindingKey
-		"go-test-exchange", // sourceExchange
+		"rmq.routingkey",      // bindingKey
+		"rmq-exchange", // sourceExchange
 		false,              // noWait
 		nil,                // arguments
 	)
