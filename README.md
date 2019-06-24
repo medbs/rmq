@@ -1,15 +1,18 @@
-### Basic Messaging with Spring boot & RabbitMQ
+### Basic Messaging with Spring boot, Go & RabbitMQ
 
 #### Prerequisites
-* Java
 * Docker & docker-compose
-* Maven
 
+#### Run the project
 
-#### Run the project 
+Start RabbitMQ
+`docker-compose up rabbitmq`
 
-`docker-compose up`
+Start Producer
+`docker-compose up producer`
 
-`mvn clean package && mvn spring-boot:run`
+Start Consumer
+`docker-compose up consumer`
 
-Go to http://localhost:15672 to access rabbitMQ GUI (login/password: guest/guest)
+Send message
+`curl -d "msg=message" -X POST http://localhost:8080/send`

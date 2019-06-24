@@ -1,13 +1,12 @@
 version: '3'
 services:
 
- # consumer:  œ
- #    build: './rmq-consumer'
  rabbitmq:
     image:  rabbitmq:management
     ports:
       - "5672:5672"
       - "15672:15672"
+      
  producer:
     build:  './rmq-producer'
     ports:
@@ -22,4 +21,19 @@ services:
       - jsa.rabbitmq.routingkey=rmq-routingkey
       - spring.main.allow-bean-definition-overriding=true
     depends_on:
-       - rabbitmq
+       - "rabbitmq"
+
+ consumer:
+    build : './rmq-consumer'
+    ports:
+      - "8888:8888"
+    environment:
+      - rabbithost=rabbitmq
+    depends_on:
+      -  "rabbitmq"
+
+ # rabbitmq:
+ #    image:  rabbitmq:management
+ #    ports:
+ #      - "5672:5672"
+ #      - "15672:15672"

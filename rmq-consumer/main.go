@@ -4,20 +4,23 @@ import (
 	"encoding/json"
 	"flag"
 	"fmt"
-	"github.com/streadway/amqp"
 	"log"
+	"os"
+
+	"github.com/streadway/amqp"
 )
 
-// The flag was used in the declaration because the connections start
-// with amqp.Dial(), and it requires a command line argument or environment variable.
-var (
-	amqpURI = flag.String("amqp", "amqp://guest:guest@localhost:5672/", "AMQP URI")
-)
-
+var rabbithost = os.Getenv("rabbithost")
 var conn *amqp.Connection
 var ch *amqp.Channel
 var replies <-chan amqp.Delivery
 var message string
+
+// The flag was used in the declaration because the connections start
+// with amqp.Dial(), and it requires a command line argument or environment variable.
+var (
+	amqpURI = flag.String("amqp", "amqp://guest:guest@"+rabbithost+":5672/", "AMQP URI")
+)
 
 func failOnError(err error, msg string) {
 	if err != nil {
@@ -28,7 +31,6 @@ func failOnError(err error, msg string) {
 func initAmqp() {
 	var err error
 	var q amqp.Queue
-
 	conn, err = amqp.Dial(*amqpURI)
 	failOnError(err, "connection to RabbitMQ failed")
 
@@ -98,7 +100,7 @@ func main() {
 	var count int = 1
 
 	for r := range replies {
-		log.Printf("Consuming reply number %d", count)
+		// log.Printf("Consuming reply number %d", count)
 		json.Unmarshal(r.Body, &message)
 		fmt.Printf(message)
 		count++
