@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.mq</groupId>
     <artifactId>rmq</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1</version>
     <name>rmq</name>
     <description>Spring Boot project</description>
 

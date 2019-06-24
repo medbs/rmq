@@ -1,5 +1,25 @@
-rabbitmq:
-  image: rabbitmq:management
-  ports:
-    - "5672:5672"
-    - "15672:15672"
+version: '3'
+services:
+
+ # consumer:  œ
+ #    build: './rmq-consumer'
+ rabbitmq:
+    image:  rabbitmq:management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+ producer:
+    build:  './rmq-producer'
+    ports:
+      - "8080:8080"
+    environment:
+      - spring.rabbitmq.host=rabbitmq
+      - spring.rabbitmq.port=5672
+      - spring.rabbitmq.username=guest
+      - spring.rabbitmq.password=guest
+      - jsa.rabbitmq.queue=rmq-queue
+      - jsa.rabbitmq.exchange=rmq-exchange
+      - jsa.rabbitmq.routingkey=rmq-routingkey
+      - spring.main.allow-bean-definition-overriding=true
+    depends_on:
+       - rabbitmq
