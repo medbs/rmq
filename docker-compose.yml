@@ -6,7 +6,7 @@ services:
     ports:
       - "5672:5672"
       - "15672:15672"
-      
+
  producer:
     build:  './rmq-producer'
     ports:
@@ -31,9 +31,3 @@ services:
       - rabbithost=rabbitmq
     depends_on:
       -  "rabbitmq"
-
- # rabbitmq:
- #    image:  rabbitmq:management
- #    ports:
- #      - "5672:5672"
- #      - "15672:15672"
